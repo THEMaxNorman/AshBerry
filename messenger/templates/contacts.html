@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="/"><button  class="btn btn-primary btn-lg" role="button"> Back to home</button></a>
+ <h2>Contacts</h2>
+<ul class="list-group list-group-flush">
+{% for ser in end %}
+<li class="list-group-item well"></strong><a href = newMessages/{{ser.id}}>{{ser.username}}</a></li>
+{% endfor %}
+</ul>
+
+{% csrf_token %}
+{% endblock %}

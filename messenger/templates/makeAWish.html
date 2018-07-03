@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block stylesheet %}
+<style>
+    div {
+        margin: 0;
+        padding: 0;
+        background-color: #FFFF00;
+        
+    }
+
+}
+    
+</style>
+{%endblock%}
+{% load static %}
+{% block content %}
+<script>
+    function myFunction() {
+        var d = new Date();
+        var n = d.getHours();
+        var c = d.getMinutes();
+        document.getElementById("demo").value = n + ":" + c;
+    }
+</script>
+<body onload="myFunction()">
+<div class = 'text-center' >
+    
+    <img src = "{% static "img/make_a_wish_icon.png" %}">
+    
+    <h2>Make a wish at 11:11 or it won't work!</h2>
+  {% if form.errors %}
+    <p style="color: red">Your username and password didn't match. Please try again.</p>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="id" id="demo" value= "" >
+    {% for field in form %}
+      <p>
+        {{ text }}<br>
+        {{ field }}<br>
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        {% if field.help_text %}
+          <p><small style="color: grey">{{ field.help_text }}</small></p>
+        {% endif %}
+      </p>
+    {% endfor %}
+    <button type="submit">Make the Wish!</button>
+    
+  </form>
+  <br>
+  </div>
+</body>
+{% endblock %}

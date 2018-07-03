@@ -1,0 +1,40 @@
+{% load static %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}42blunts.com{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    {% block stylesheet %}
+    <style>
+        @font-face {
+            font-family: myFirstFont;
+            src: url("{% static  'LuckiestGuy.ttf'%}");
+        }
+    
+    div fortniteFont{
+        font-family: myFirstFont;
+    }
+    </style>
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+
+      {% block breadcrumb %}
+      {% endblock %}
+    
+    {% block content %}
+    {% endblock %}
+  
+{% endblock body %}
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
