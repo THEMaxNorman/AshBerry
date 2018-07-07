@@ -49,8 +49,7 @@ class Profile(models.Model):
     #seperated by a comma
     installed_apps = models.TextField(default= 'messenger;/mainMessages,gmail;https://gmail.com,calculator;/calc,contacts;/contacts,appstore;/appstore')
     background_image = models.TextField(default='default')
-    isAdminD = active = models.BooleanField(default=False)
-
+    
 
 
 @receiver(post_save, sender=User)
