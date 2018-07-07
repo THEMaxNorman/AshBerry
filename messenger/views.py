@@ -291,9 +291,9 @@ def memeUpload(request):
     if request.method == 'POST':
         form = memeDefForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            form.poster = request.user
-            form.save()
+            meme =form.save()
+            meme.poster = request.user
+            meme.save()
             return redirect('/memeDict')
     else:
         form = memeDefForm()
@@ -302,15 +302,32 @@ def memeUpload(request):
 @login_required
 def memeDict(request):
     end = []
-    for x in memeDef.objects.all():
-        #preform logic of some sort
+    for x in alphaSort(memeDef.objects.all()):
+        #enact alphabetical sort.
         end.append(x)
 
     return render(request, 'memeDict.html',{'end':end})
+def alphaSort(memes):
+    memeNameList = []
+    for x in memes:
+        memeNameList.append([x.name,x.id])
+
+    closeEnd = sorted(memeNameList, key = lambda x: str.lower(str(x[0])))
+    print closeEnd
+    end = []
+    for x in closeEnd:
+        end.append(memeDef.objects.get(id = int(x[1])))
+    return end
+
 @login_required
 def meme(request, string):
     mem = memeDef.objects.get(id=int(string))
     return render(request, 'meme.html', {'meme':mem})
 @login_required
 def ymeme(request):
-    print ('fuck')
+    end = []
+    for x in memeDef.objects.all():
+        if x.poster == request.user:
+          end.append(x)
+
+    return render(request, 'ymeme.html', {'end':end})
