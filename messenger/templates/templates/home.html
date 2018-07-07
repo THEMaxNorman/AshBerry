@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block stylesheet %}
+<style>
+    .icon {
+        width: 12vh;
+        height: 12vh;
+        border-radius: 3vh;
+        background-color: lightblue;
+        margin: -1vh;
+        overflow:hidden;
+        
+    }
+.icon3 {
+    width: 12vh;
+    height: 12vh;
+    border-radius: 3vh;
+    background-color: lightblue;
+    margin: 4vh;
+    
+    
+}
+
+.icon2 {
+    width: 15vh;
+    height: 15vh;
+    border-radius: 3vh;
+    background-color: red;
+    margin: 4vh;
+    overflow:hidden;
+}
+.notification{
+    width: 4vh;
+    height: 4vh;
+    border-radius: 12vh;
+    background-color: red;
+    position: absolute;
+    left: 13vh;
+    top: 3vh;
+    z-index; 10;
+    color: white;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+</style>
+{% endblock %}
+{% block content %}
+{% autoescape off%}
+
+<a href = '/mainMessages'><button class="icon3"><p class = "notification">{{uM}}</p><div class="icon" ><img src="{% get_static_prefix %}img/messenger.jpg" alt="messenger"/></div></button></a>
+{%for x in apps%}
+
+<a href = {{x.1}}><button class="icon3"><div class="icon" ><img src="{% get_static_prefix %}img/{{x.0}}.jpg" alt="{{x.0}}"/>{{x.0}}</div></button></a>
+
+
+{%endfor%}
+<a href = /logout><div class="icon2" ><img src="{% static "img/logout.png" %}" alt="My image"/></div></a>
+{% endautoescape %}
+{% endblock %}

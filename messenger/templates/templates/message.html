@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{%block stylesheet%}
+<style>
+#rcorners1 {
+    border-radius: 4vh 3vh 3vh 0vh;
+background: #73AD21;
+padding: 3vh;
+margin: 3vh;
+overflow: hidden;
+width: 50vh;
+height: auto;
+float: left;
+}
+#rcorners2 {
+    border-radius: 4vh 3vh 0vh 3vh;
+    background: #73AD21;
+    padding: 3vh;
+    margin: 3vh;
+    overflow: hidden;
+    width: 50vh;
+    height: auto;
+    float: right;
+    clear right;
+    
+}
+</style>
+
+{%endblock%}
+{% block content %}
+<a href="/"><button  class="btn btn-primary btn-lg" role="button"> Back to home</button></a>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class = 'text-center'>
+        <h1>{{other }}</h1>
+        </div>
+<div class = 'card '>
+
+{%for x in usrSent%}
+
+{%if x.sender.id is user.id%}
+<div class = ' ml-auto'id="rcorners2">
+    {{x.text}}
+</div>
+{%else%}
+<div class = 'text-left 'id="rcorners1">
+    {{x.text}}
+</div>
+
+{%endif%}
+
+{%endfor%}
+</div>
+<div class = 'card '>
+<h2>New Message to {{other.username}}</h2>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+    {{ field.label_tag }}<br>
+    <div class="form" >
+    {{ field }}
+    </div>
+    {% if field.help_text %}
+    <small style="color: grey">{{ field.help_text }}</small>
+    {% endif %}
+    {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %}
+    </p>
+    {% endfor %}
+    
+    <button class = 'btn btn-primary' type="submit">Send</button>
+</form>
+</div>
+    </div>
+</div>
+{% endblock %}

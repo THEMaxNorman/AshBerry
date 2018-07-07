@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="/"><button  class="btn btn-primary btn-lg" role="button"> Back to home</button></a>
+<br>
+<div>
+    
+<a href = "/contacts"><button type="button" class="btn btn-warning btn-lg btn-block">Send new message</button></a>
+</div>
+
+<h2>Messages:</h2>
+<ul class="list-group list-group-flush">
+{% for ser in names %}
+<li class="list-group-item well"></strong><a href = messages/{{ser.0.id}}>{{ser.0.username}}</a>
+    {% if ser.1 > 0 %}
+    <span class="badge badge-pill badge-warning">{{ser.1}}</span>
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+{% csrf_token %}
+{% endblock %}
