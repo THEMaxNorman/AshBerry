@@ -12,10 +12,10 @@
 </div>
 
 
-<h2>Welcome to the App Store!</h2>
+<h2>THE MEME DICTIONARY</h2>
 <ul class="list-group list-group-flush">
 {% for ser in end %}
-<li class="list-group-item well"></strong><a href = /meme/{{ser.id}}>{{ser.name}}</a></li>
+<li class="list-group-item well"></strong><a href = /meme/{{ser.id}}>{{ser.name}}</a> <small> {{ser.poster}}</small></li>
 {% endfor %}
 </ul>
 
