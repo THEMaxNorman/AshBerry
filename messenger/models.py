@@ -22,10 +22,10 @@ class App(models.Model):
     link = models.CharField(blank= True, max_length= 100)
     poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     active = models.BooleanField(default=True)
-
+from django.db import models
 class Wish(models.Model):
     text = models.TextField(blank=True)
-    from django.db import models
+
 
 class memeDef(models.Model):
     name = models.CharField(max_length=255, blank=True)
@@ -37,10 +37,14 @@ class memeDef(models.Model):
 class store_item(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    image = models.FileField(upload_to='images/')
+    image = models.FileField(upload_to='StoreImages/%Y/%m/%d/')
     description = models.TextField(blank=True)
-    paypalEmail = models.CharField(max_length=255, blank=True)
     price = models.DecimalField(decimal_places=2,max_digits=10, blank=True)
+class bug_report(models.Model):
+    time = models.DateTimeField(auto_now_add=True, null=True)
+    poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    text = models.TextField(blank=True)
+
 
  # the profile model
 class Profile(models.Model):
@@ -49,7 +53,10 @@ class Profile(models.Model):
     #seperated by a comma
     installed_apps = models.TextField(default= 'messenger;/mainMessages,gmail;https://gmail.com,calculator;/calc,contacts;/contacts,appstore;/appstore')
     background_image = models.TextField(default='default')
-    
+    isFounder = models.BooleanField(default=False)
+    paypalEmail = models.EmailField(blank= True)
+
+
 
 
 @receiver(post_save, sender=User)

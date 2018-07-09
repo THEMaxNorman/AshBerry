@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from models import  Massage,App, Wish, memeDef
+from models import  Massage,App, Wish, memeDef, Profile, bug_report
 import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm
+from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm, profileForm, bugReportForm
 import datetime
 import pytz
 import time
@@ -41,7 +41,7 @@ def home(request):
     uM = get_all_unread(request.user)
     for x in User.objects.all():
         #resetter SHOULD BE COMMENTED BEFORE PRODUCTION
-        #x.profile.installed_apps = 'gmail;https://gmail.com,calculator;/calc,contacts;/contacts,appstore;/appstore,settings;/settings,makeAWish;/makeawish'
+        #x.profile.installed_apps = 'gmail;https://gmail.com,calculator;/calc,contacts;/contacts,appstore;/appstore,settings;/settings,makeAWish;/makeawish,bugReport;/bugReport'
         x.profile.save()
     return render(request, 'home.html', {'apps': end, 'uM': uM})
 
@@ -331,3 +331,31 @@ def ymeme(request):
           end.append(x)
 
     return render(request, 'ymeme.html', {'end':end})
+@login_required
+def bugReport(request):
+    if request.method == 'POST':
+        form = bugReportForm(request.POST)
+        if form.is_valid():
+            bug = form.save()
+            bug.poster = request.user
+            bug.save()
+    else:
+        form = bugReportForm()
+        titleText = 'Report a bug!'
+        helpText = 'Thank you for your help, please try to be specific'
+        return render(request, 'bugReportForm.html', {'form': form, 'titleText': titleText, 'helpText': helpText})
+
+@login_required
+def profileUpdate(request):
+    if request.method == 'POST':
+        ppEmail = request.POST.get('paypalEmail')
+        request.user.profile.paypalEmail = ppEmail
+        request.user.profile.save()
+        return redirect('/')
+
+    else:
+        form = profileForm()
+        titleText = 'Change your profile settings'
+        helpText = 'Your current email is: '
+        ppE = request.user.profile.paypalEmail
+        return render(request, 'bugReportForm.html', {'form': form, 'titleText': titleText, 'helpText': helpText, 'ppE':ppE})

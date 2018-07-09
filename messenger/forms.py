@@ -1,5 +1,5 @@
 from django import forms
-from models import Massage, App, Wish, memeDef
+from models import Massage, App, Wish, memeDef, Profile, bug_report
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -31,3 +31,13 @@ class memeDefForm(forms.ModelForm):
     class Meta():
         model = memeDef
         fields = ('name', 'definition', 'document')
+
+class profileForm(forms.ModelForm):
+    class Meta():
+        model = Profile
+        fields = ('paypalEmail',)
+
+class bugReportForm(forms.ModelForm):
+    class Meta():
+        model = bug_report
+        fields = ('text',)
