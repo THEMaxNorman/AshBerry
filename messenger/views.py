@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from models import  Massage,App, Wish, memeDef, Profile, bug_report,blog_post
+from models import  Massage,App, Wish, memeDef, Profile, bug_report, blog_post
 import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
