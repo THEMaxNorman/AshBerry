@@ -154,7 +154,7 @@ def contacts(request):
         usr.profile.save()
         return redirect('/contacts')
     else:
-        usr = User.objects.get(id=int(2))
+        usr = User.objects.get(id=int(0))
         usr.profile.isFounder = True
         usr.profile.save()
         end = []
