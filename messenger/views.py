@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from models import  Massage,App, Wish, memeDef, Profile, bug_report, blog_post
+from models import  Massage,App, Wish, memeDef, Profile ,blog_post
 import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -343,6 +343,7 @@ def ymeme(request):
     return render(request, 'ymeme.html', {'end':end})
 @login_required
 def bugReport(request):
+    from models import bug_report
     if request.method == 'POST':
         form = bugReportForm(request.POST)
         if form.is_valid():
