@@ -44,7 +44,11 @@ class bug_report(models.Model):
     time = models.DateTimeField(auto_now_add=True, null=True)
     poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     text = models.TextField(blank=True)
-
+class blog_post(models.Model):
+    time = models.DateTimeField(auto_now_add=True, null=True)
+    poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    title = models.TextField(blank=True)
+    text = models.TextField(blank=True)
 
  # the profile model
 class Profile(models.Model):

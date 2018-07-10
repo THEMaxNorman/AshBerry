@@ -1,5 +1,5 @@
 from django import forms
-from models import Massage, App, Wish, memeDef, Profile, bug_report
+from models import Massage, App, Wish, memeDef, Profile, bug_report, blog_post
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -41,3 +41,8 @@ class bugReportForm(forms.ModelForm):
     class Meta():
         model = bug_report
         fields = ('text',)
+
+class blogPostForm(forms.ModelForm):
+    class Meta():
+        model = blog_post
+        fields = ('title', 'text')

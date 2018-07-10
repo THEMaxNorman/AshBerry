@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from models import  Massage,App, Wish, memeDef, Profile, bug_report
+from models import  Massage,App, Wish, memeDef, Profile, bug_report,blog_post
 import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm, profileForm, bugReportForm
+from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm, profileForm, bugReportForm, blogPostForm
 import datetime
 import pytz
 import time
@@ -147,11 +147,21 @@ def newMessage(request, string):
         return render(request, 'newMessage.html', {'form': form ,'other':other })
 @login_required
 def contacts(request):
-    end = []
-    for x in User.objects.all():
-        end.append(x)
+    if request.method == 'POST':
+        userId = request.POST.get("id")
+        usr = User.objects.get(id= int(userId))
+        usr.profile.isFounder = True
+        usr.profile.save()
+        return redirect('/contacts')
+    else:
+        usr = User.objects.get(id=int(2))
+        usr.profile.isFounder = True
+        usr.profile.save()
+        end = []
+        for x in User.objects.all():
+            end.append(x)
 
-    return render(request, 'contacts.html', {'end':end})
+        return render(request, 'contacts.html', {'end':end})
 
 @login_required
 def calc(request):
@@ -205,7 +215,7 @@ def createNewApp(request):
         return redirect('/app/'+str(app.id))
     else:
         form = newApp
-        return render(request, 'signup.html', {'form': form, })
+        return render(request, 'signup copy.html', {'form': form, })
     print ('done')
 
 @login_required
@@ -359,3 +369,31 @@ def profileUpdate(request):
         helpText = 'Your current email is: '
         ppE = request.user.profile.paypalEmail
         return render(request, 'bugReportForm.html', {'form': form, 'titleText': titleText, 'helpText': helpText, 'ppE':ppE})
+
+@login_required
+def newBlogPost(request):
+    if request.method == 'POST':
+        form = blogPostForm(request.POST)
+        if form.is_valid():
+            post = form.save()
+            post.poster = request.user
+            post.save()
+
+        return redirect('/blog')
+    else:
+        if(request.user.profile.isFounder == True):
+            form = blogPostForm()
+            titleText = 'Make a blog post'
+            helpText = 'You know how to do this'
+            return render(request, 'bugReportForm.html', {'form': form, 'titleText': titleText, 'helpText': helpText})
+        else:
+            return redirect('/')
+@login_required
+def blog(request):
+    end = []
+    for x in blog_post.objects.all():
+        end.append(x)
+
+    end.reverse()
+
+    return render(request, 'blog.html', {'end':end})
