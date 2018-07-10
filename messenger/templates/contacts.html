@@ -1,11 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <a href="/"><button  class="btn btn-primary btn-lg" role="button"> Back to home</button></a>
  <h2>Contacts</h2>
 <ul class="list-group list-group-flush">
 {% for ser in end %}
-<li class="list-group-item well"></strong><a href = newMessages/{{ser.id}}>{{ser.username}}</a></li>
+<li class="list-group-item well">
+    {%if ser.profile.isFounder is True%}
+    <a class="text-danger" href = newMessages/{{ser.id}}>{{ser.username}}</a>
+    
+    {%else%}
+   <a href = newMessages/{{ser.id}}>{{ser.username}}</a>
+    {%endif%}
+    <br>
+    {%if user.profile.isFounder is True%}
+    
+    {%if ser.profile.isFounder is False%}
+    <form class="form-inline" method="post">
+        {% csrf_token %}
+        
+        <input type="hidden" name="id" value={{ser.id}}>
+            
+            <button  class="btn btn-danger " type="submit">Make Admin</button>
+            
+            </form>
+    
+    {%endif%}
+    {%endif%}
+
+
+</li>
 {% endfor %}
 </ul>
 

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="/"><button  class="btn btn-primary btn-lg" role="button"> Back to home</button></a>
+    
+</div>
+<br>
+<div>
+    
+
+</div>
+
+
+<h2 class = 'text-center'>The Shankberry Blog!</h2>
+
+{% for ser in end %}
+<div class="card text-center">
+    <div class="card-header">
+        {{ser.title}}
+    </div>
+    <div class="card-body">
+        
+        <p class="card-text">{{ser.text}}</p>
+        
+    </div>
+    <div class="card-footer text-muted">
+        {{ser.poster}}
+    </div>
+</div>
+<br>
+{% endfor %}
+
+
+{% csrf_token %}
+{% endblock %}

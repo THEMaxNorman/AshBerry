@@ -5,7 +5,9 @@
 
 
 <h2 class = 'text-center'>Settings</h2>
+<a href = "/profileSettings"><button type="button" class="btn btn-info btn-lg  ml-auto">Profile Settings (Paypal Email, etc.)</button></a>
 <ul class="list-group list-group-flush">
+
 {% for ser in end %}
 <li class="list-group-item well">{{ser.0}} <form method="post">
     {% csrf_token %}
@@ -21,3 +23,4 @@
 
 
 {% endblock %}
+
