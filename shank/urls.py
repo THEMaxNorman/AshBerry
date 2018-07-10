@@ -45,6 +45,9 @@ urlpatterns = [
     url('^memeDict/$', core_views.memeDict, name='memeDict'),
     url('^meme/(?P<string>[\w\-]+)/$', core_views.meme, name='meme'),
     url('^ymeme/$', core_views.ymeme, name='ymeme'),
-
+    url('^bugReport/$', core_views.bugReport, name='bugReport'),
+    url('^profileSettings/$', core_views.profileUpdate, name='profileSettings'),
+    url('^newBlogPost/$', core_views.newBlogPost, name = 'newBlogPost'),
+    url('^blog', core_views.blog, name = 'blog'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
