@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from models import  Massage,App, Wish, memeDef, Profile ,blog_post
+from models import  Massage,App, Wish, memeDef, Profile ,blog_post, artPiece
 import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm, profileForm, bugReportForm, blogPostForm
+from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm, profileForm, bugReportForm, blogPostForm, artForm
 import datetime
 import pytz
 import time
@@ -154,9 +154,6 @@ def contacts(request):
         usr.profile.save()
         return redirect('/contacts')
     else:
-        usr = User.objects.get(id=int(0))
-        usr.profile.isFounder = True
-        usr.profile.save()
         end = []
         for x in User.objects.all():
             end.append(x)
@@ -398,3 +395,27 @@ def blog(request):
     end.reverse()
 
     return render(request, 'blog.html', {'end':end})
+
+@login_required
+def artUpload(request):
+    if request.method == 'POST':
+        form = artForm(request.POST, request.FILES)
+        if form.is_valid():
+            art = form.save()
+            art.poster = request.user
+            print 'posted'
+            art.save()
+        else:
+            print form.errors
+            print 'fuck what the fuck is wrong'
+        return redirect('/')
+
+    else:
+        form = artForm()
+        titleText = 'Upload your art'
+        helpText = 'Make it pretty! '
+        return render(request, 'artUpload.html', {'form': form, 'titleText': titleText, 'helpText': helpText, })
+@login_required
+def gallery(request):
+    x = artPiece.objects.all()
+    return render(request, 'gallery.html', {'end' : x , })

@@ -34,6 +34,13 @@ class memeDef(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+class artPiece(models.Model):
+    name = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank = True)
+    document = models.FileField(upload_to= 'ArtImages/')
+    poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 class store_item(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
