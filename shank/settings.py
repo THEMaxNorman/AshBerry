@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     'ad416da0.ngrok.io',
 	'ec2-52-13-214-99.us-west-2.compute.amazonaws.com',
     '127.0.0.1',
+	'shankberry.com',
 ]
 
 
