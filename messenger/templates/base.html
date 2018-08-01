@@ -8,24 +8,32 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+        
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     {% block stylesheet %}
     <style>
-        @font-face {
-            font-family: myFirstFont;
-            src: url("{% static  'LuckiestGuy.ttf'%}");
+        body {
+    background: rgba(88,86,85,1);
+
         }
-    
-    div fortniteFont{
-        font-family: myFirstFont;
-    }
+hr
+{
+    border: 1px solid #666;
+    position: absolute;
+    width: 100%;
+}
     </style>
     {% endblock %}
   </head>
   <body>
     {% block body %}
+      
+          
+              <input type = "image" src = "{% get_static_prefix %}img/back.png" style="width: 17vh; height: 17vh;" ONCLICK="history.back()"> 
+      
+              
 
+    <br>
       {% block breadcrumb %}
       {% endblock %}
     
