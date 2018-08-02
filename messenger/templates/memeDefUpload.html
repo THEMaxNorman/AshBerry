@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
-
+{%load static%}
 {% block content %}
-<a href="/"><button  class="btn btn-primary btn-lg" role="button"> Back to home</button></a>
+ <div style = "margin-left: auto; margin-right: auto;">
 <h2>Upload a new meme!</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.as_p}}
    
-    <button class = 'btn btn-primary'type="submit">Upload</button>
+    <input type = "image" src = "{% get_static_prefix %}img/upload.png" style="width: 34vh; height: 17vh;"> 
   </form>
+     </div>
 {% endblock %}

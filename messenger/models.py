@@ -40,6 +40,12 @@ class artPiece(models.Model):
     document = models.FileField(upload_to= 'ArtImages/')
     poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+class song(models.Model):
+    name = models.CharField(max_length=255, blank=True)
+    poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    document = models.FileField(upload_to='Music/%Y/%m/%d/')
+    album = models.CharField(max_length=255, blank=True)
+
 
 class store_item(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

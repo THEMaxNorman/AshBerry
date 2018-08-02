@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from models import  Massage,App, Wish, memeDef, Profile ,blog_post, artPiece
+from models import  Massage,App, Wish, memeDef, Profile ,blog_post, artPiece, song
 import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm, profileForm, bugReportForm, blogPostForm, artForm
+from messenger.forms import SignUpForm, message, newApp, makeAWish, memeDefForm, profileForm, bugReportForm, blogPostForm, artForm, songForm
 import datetime
 import pytz
 import time
@@ -21,6 +21,8 @@ from paypal.standard.forms import PayPalPaymentsForm
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 def get_all_apps(user):
+    #gets all apps by the app string each app is seperated by a comma and then the url is seperated by a ;
+    # this parses them into a list with the organization: [[app, url], [app, url]]
     apps = user.profile.installed_apps
     ends = apps.split(',')
     end = []
@@ -29,6 +31,8 @@ def get_all_apps(user):
     return end
 
 def get_all_unread(user):
+    # gets the number of unread messages by iterating through each user and checking it with the main user
+    #DOES NOT WORK ON MESSAGES TO SELF
     endC = 0
     for x in User.objects.all():
         endC += get_unread_msg_by_user(x,user)
@@ -36,6 +40,7 @@ def get_all_unread(user):
 # Create your views here.
 @login_required
 def home(request):
+    # simple. gets number of unread msgs and gets apps and renders them
     end = get_all_apps(request.user)
     print end
     uM = get_all_unread(request.user)
@@ -47,6 +52,8 @@ def home(request):
 
 
 def signup(request):
+    #checks to see if its post or not.
+    # if post it validates and the creates new user
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -419,3 +426,28 @@ def artUpload(request):
 def gallery(request):
     x = artPiece.objects.all()
     return render(request, 'gallery.html', {'end' : x , })
+@login_required
+def songUpload(request):
+    if request.method == 'POST':
+        form = songForm(request.POST, request.FILES)
+        if form.is_valid():
+            sonG = form.save()
+            sonG.poster = request.user
+            print 'posted'
+            sonG.save()
+        else:
+            print form.errors
+            print 'fuck what the fuck is wrong'
+        return redirect('/')
+
+    else:
+        form = songForm()
+        titleText = 'Upload your song'
+        helpText = 'Make it sound like something! '
+        return render(request, 'artUpload.html', {'form': form, 'titleText': titleText, 'helpText': helpText, })
+
+@login_required
+def viewSong(request, string):
+    #gets song and then renders it. most heavy lifting done on template, very straightforward
+    sng = song.objects.get(id = int(string))
+    return render(request, 'songPage.html', {'song': sng})

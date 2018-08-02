@@ -1,5 +1,5 @@
 from django import forms
-from models import Massage, App, Wish, memeDef, Profile, bug_report, blog_post, artPiece
+from models import Massage, App, Wish, memeDef, Profile, bug_report, blog_post, artPiece, song
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -51,3 +51,8 @@ class artForm(forms.ModelForm):
      class Meta():
         model = artPiece
         fields = ('name', 'description', 'document')
+
+class songForm(forms.ModelForm):
+    class Meta():
+        model = song
+        fields = ('name', 'document')
